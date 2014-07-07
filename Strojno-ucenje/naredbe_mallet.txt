@@ -1,0 +1,29 @@
+PRIMJERI IMPORTANJA PODATAKA IZ FILEA I IZ FOLDERA
+bin/mallet import-file --input /data/data.txt --output output.mallet --keep-sequence --remove-stopwords
+
+
+bin/mallet import-dir --input /data/* --output output.mallet --keep-sequence --remove-stopwords
+
+keep-sequence--->potrebno ukljuèiti kako bi LDA funkcionirao	
+remove-stopwords--->mièemo standardne engleske stop rijeèi
+
+
+
+TRENIRANJE TEMA
+bin\mallet train-topics --input 20_newsgroups.mallet --output-state topic-state.gz --output-topic-keys 20_newsgroups_keys.txt --output-doc-topics 20_newsgroups_composition.txt --output-state 20_newsgroups_state.txt --output-topic-keys 20_newsgroups_keys.txt --topic-word-weights-file 20_newsgroups_weights.txt --word-topic-counts-file 20_newsgroups_counts.txt --output-doc-topics 20_newsgroups_topics.txt --num-topics 50 --num-top-words 50
+
+num-topics--->broj tema
+num-top-words--->broj najbitnijih rijeèi iz svake teme koje ispisujemo u 20_newsgroups_keys.txt
+u ostalim txt fileovima nalaze se razni podaci i parametri dobiveni LDA modelom
+nama najbitniji je:
+20_newsgroups_topics.txt--->popis svih tema s pripadnom zastupljenosti u dokumentu za svaki dokument
+
+
+
+
+KLASIFIKACIJA POMOÆU NAIVE BAYESA
+bin/mallet train-classifier --input labeled.mallet --training-portion 0.5 \
+  --report train:accuracy test:f1:sports
+
+training portion-->zadajemo koliki dio skpa podataka uzimamo kao training set, ostatak je test set
+report--->zadajemo što želimo da nam program ispiše
